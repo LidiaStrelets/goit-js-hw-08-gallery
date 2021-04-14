@@ -7,12 +7,9 @@ img {
   list-style: none;
 
   display: flex;
-  // justify-content: space-between;
-  // align-items: space-between;
   flex-wrap: wrap;
 
   width: 990px;
-  // height: 675px;
 
   margin-left: auto;
   margin-right: auto;
@@ -62,7 +59,7 @@ body.modal-open {
   width: 900px;
   height: 620px;
 
-  margin: 30px auto;
+  margin: 150px auto;
   display: flex;
   align-items: center;
   padding: 10px;
