@@ -11,15 +11,16 @@ img {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  width: 990px;
+  width: 80vw;
+  margin-top: 10vh;
   margin-left: auto;
   margin-right: auto;
   padding: 0;
 }
 
 .gallery__item {
-  width: 325px;
-  height: 217px;
+  width: 25vw;
+  height: 15vw;
   overflow: hidden;
 }
 
@@ -62,9 +63,11 @@ body.modal-open .modal {
 
 .modal {
   position: relative;
-  width: 900px;
-  height: 620px;
-  margin: 150px auto;
+  width: 70vw;
+  height: 90vh;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

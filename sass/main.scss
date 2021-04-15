@@ -9,15 +9,20 @@ img {
   display: flex;
   flex-wrap: wrap;
 
-  width: 990px;
+  // width: 990px;
+  width: 80vw;
 
+  margin-top: 10vh;
   margin-left: auto;
   margin-right: auto;
   padding: 0;
 }
 .gallery__item {
-  width: 325px;
-  height: 217px;
+  // width: 325px;
+  // height: 217px;
+  width: 25vw;
+  height: 15vw;
+
   overflow: hidden;
   &:not(:nth-child(3n)) {
     margin-right: 5px;
@@ -56,10 +61,13 @@ body.modal-open {
 }
 .modal {
   position: relative;
-  width: 900px;
-  height: 620px;
+  width: 70vw;
+  height: 90vh;
 
-  margin: 150px auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5vh;
+
   display: flex;
   align-items: center;
   padding: 10px;
