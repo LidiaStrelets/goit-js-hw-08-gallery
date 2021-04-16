@@ -1,77 +1,90 @@
-import images from "./gallery-items.js";
+import images from './gallery-items.js';
 
-const listRef = document.querySelector(".js-gallery");
-const closeBtnRef = document.querySelector(".close__btn");
-const bigImgRef = document.querySelector(".big__picture");
-const backdropRef = document.querySelector(".backdrop");
+const refs = {
+  list: document.querySelector('.js-gallery'),
+  closeBtn: document.querySelector("[data-action='close-lightbox']"),
+  bigImg: document.querySelector('.lightbox__image'),
+  backdrop: document.querySelector('.js-lightbox'),
+  backdropOverlay: document.querySelector('.lightbox__overlay'),
+};
 
-const sources = images.map((img) => img.original);
+const sources = images.map(img => img.original);
 
-const createListMarkup = (images) =>
+const createListMarkup = images =>
   images
     .map(
       ({ preview, original, description }) =>
-        `<li class="gallery__item"><img class="gallery__picture" data-source=${original} src=${preview} alt="${description}"/></li>`
+        `<li class="gallery__item"><a
+    class="gallery__link"
+    href="${original}"
+  ><img class="gallery__picture" data-source=${original} src=${preview} alt="${description}"/></li></a>`,
     )
-    .join("");
+    .join('');
 
-const handleModalOpening = () => {
-  document.body.classList.add("modal-open");
-  bigImgRef.src = event.target.dataset.source;
+const handleModalOpening = event => {
+  refs.backdrop.classList.add('is-open');
+  refs.bigImg.src = event.target.dataset.source;
 };
 const handleModalClosing = () => {
-  document.body.classList.remove("modal-open");
-  bigImgRef.src = "";
-  window.removeEventListener("keydown", handleKeyPress);
-  closeBtnRef.removeEventListener("click", handleModalClosing);
-  backdropRef.removeEventListener("click", handleBackdropClick);
+  refs.backdrop.classList.remove('is-open');
+  refs.bigImg.src = '';
+  window.removeEventListener('keydown', handleKeyPress);
+  refs.closeBtn.removeEventListener('click', handleModalClosing);
+  refs.backdrop.removeEventListener('click', handleBackdropClick);
 };
 
 const showNextPic = () => {
-  let currentPic = sources.indexOf(bigImgRef.src);
+  let currentPic = sources.indexOf(refs.bigImg.src);
   if (currentPic === sources.length - 1) {
     currentPic = -1;
   }
-  bigImgRef.src = sources[currentPic + 1];
+  refs.bigImg.src = sources[currentPic + 1];
 };
 const showPreviousPicture = () => {
-  let currentPic = sources.indexOf(bigImgRef.src);
+  let currentPic = sources.indexOf(refs.bigImg.src);
   if (currentPic === 0) {
     currentPic = sources.length - 1;
   }
-  bigImgRef.src = sources[currentPic - 1];
+  refs.bigImg.src = sources[currentPic - 1];
 };
 
-const handleKeyPress = (event) => {
-  if (event.code === "ArrowRight") {
+const handleKeyPress = event => {
+  if (event.code === 'ArrowRight') {
     showNextPic();
   }
-  if (event.code === "ArrowLeft") {
+  if (event.code === 'ArrowLeft') {
     showPreviousPicture();
   }
-  if (event.code === "Escape") {
+  if (event.code === 'Escape') {
     handleModalClosing();
   }
 };
-const handleBackdropClick = (event) => {
-  if (event.target === event.currentTarget) {
+const handleBackdropClick = event => {
+  if (event.target === refs.backdropOverlay) {
     handleModalClosing();
   }
 };
 
 const listMarkup = createListMarkup(images);
-listRef.innerHTML = listMarkup;
+refs.list.innerHTML = listMarkup;
 
-listRef.addEventListener("click", (event) => {
-  if (event.target.nodeName !== "IMG") {
+refs.links = document.querySelectorAll('.gallery__link');
+refs.links.forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+  });
+});
+
+refs.list.addEventListener('click', event => {
+  if (event.target.nodeName !== 'IMG') {
     return;
   }
 
-  handleModalOpening();
+  handleModalOpening(event);
 
-  window.addEventListener("keydown", handleKeyPress);
+  window.addEventListener('keydown', handleKeyPress);
 
-  closeBtnRef.addEventListener("click", handleModalClosing);
+  refs.closeBtn.addEventListener('click', handleModalClosing);
 
-  backdropRef.addEventListener("click", handleBackdropClick);
+  refs.backdrop.addEventListener('click', handleBackdropClick);
 });
